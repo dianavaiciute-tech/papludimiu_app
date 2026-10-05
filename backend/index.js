@@ -1,4 +1,5 @@
 const Papludimys = require("./modeliai/papludimys");
+const Stebejimas = require("./modeliai/stebejimas");
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
@@ -64,6 +65,61 @@ app.delete("/api/papludimiai/:id", async (req, res) => {
     res.status(200).json({ message: "Paplūdimys ištrintas" });
   } catch (error) {
     res.status(400).json({ message: "Nepavyko ištrinti paplūdimio" });
+  }
+});
+
+app.get("/api/stebejimai", async (req, res) => {
+  try {
+    const stebejimai = await Stebejimas.find();
+
+    res.status(200).json(stebejimai);
+  } catch (error) {
+    res.status(500).json({ message: "Nepavyko gauti stebėjimų" });
+  }
+});
+
+app.post("/api/stebejimai", async (req, res) => {
+  try {
+    const naujasStebejimas = new Stebejimas(req.body);
+    const issaugotasStebejimas = await naujasStebejimas.save();
+
+    res.status(201).json(issaugotasStebejimas);
+  } catch (error) {
+    res.status(400).json({ message: "Nepavyko sukurti stebėjimo" });
+  }
+});
+
+app.put("/api/stebejimai/:id", async (req, res) => {
+  try {
+    const atnaujintasStebejimas = await Stebejimas.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true },
+    );
+
+    if (!atnaujintasStebejimas) {
+      return res.status(404).json({ message: "Stebėjimas nerastas" });
+    }
+
+    res.status(200).json(atnaujintasStebejimas);
+  } catch (error) {
+    res.status(400).json({ message: "Nepavyko atnaujinti stebėjimo" });
+  }
+});
+
+app.delete("/api/stebejimai/:id", async (req, res) => {
+  try {
+    const istrintasStebejimas = await Stebejimas.findByIdAndDelete(
+      req.params.id,
+    );
+
+    if (!istrintasStebejimas) {
+      return res.status(404).json({ message: "Stebėjimas nerastas" });
+    }
+
+    res.status(200).json({ message: "Stebėjimas ištrintas" });
+  } catch (error) {
+    res.status(400).json({ message: "Nepavyko ištrinti stebėjimo" });
   }
 });
 
