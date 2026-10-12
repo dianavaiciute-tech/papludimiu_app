@@ -3,6 +3,7 @@ const Stebejimas = require("./modeliai/stebejimas");
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const cors = require("cors");
 
 dotenv.config();
 
@@ -12,6 +13,7 @@ app.get("/", (req, res) => {
   res.send("Backend veikia!");
 });
 
+app.use(cors());
 app.use(express.json());
 
 app.get("/api/papludimiai", async (req, res) => {
