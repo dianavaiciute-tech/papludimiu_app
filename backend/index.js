@@ -32,7 +32,17 @@ app.post("/api/papludimiai", async (req, res) => {
 
     res.status(201).json(issaugotasPapludimys);
   } catch (error) {
-    res.status(400).json({ message: "Nepavyko sukurti paplūdimio" });
+    if (error.name === "ValidationError" || error.name === "CastError") {
+      return res.status(400).json({
+        message: "Neteisingi paplūdimio duomenys",
+      });
+    }
+
+    console.error("Paplūdimio kūrimo klaida:", error);
+
+    res.status(500).json({
+      message: "Įvyko serverio klaida kuriant paplūdimį",
+    });
   }
 });
 
@@ -50,33 +60,72 @@ app.put("/api/papludimiai/:id", async (req, res) => {
 
     res.status(200).json(atnaujintasPapludimys);
   } catch (error) {
-    res.status(400).json({ message: "Nepavyko atnaujinti paplūdimio" });
+    if (error.name === "ValidationError" || error.name === "CastError") {
+      return res.status(400).json({
+        message: "Neteisingi paplūdimio duomenys arba ID",
+      });
+    }
+
+    console.error("Paplūdimio atnaujinimo klaida:", error);
+
+    res.status(500).json({
+      message: "Įvyko serverio klaida atnaujinant paplūdimį",
+    });
   }
 });
 
 app.delete("/api/papludimiai/:id", async (req, res) => {
   try {
+    const susijeStebejimai = await Stebejimas.find({
+      papludimys: req.params.id,
+    });
+
+    if (susijeStebejimai.length > 0) {
+      return res.status(400).json({
+        message:
+          "Negalima ištrinti paplūdimio, nes jis turi vandens stebėjimų. Pirmiausia ištrinkite susijusius stebėjimus.",
+      });
+    }
+
     const istrintasPapludimys = await Papludimys.findByIdAndDelete(
       req.params.id,
     );
 
     if (!istrintasPapludimys) {
-      return res.status(404).json({ message: "Paplūdimys nerastas" });
+      return res.status(404).json({
+        message: "Paplūdimys nerastas",
+      });
     }
 
-    res.status(200).json({ message: "Paplūdimys ištrintas" });
+    res.status(200).json({
+      message: "Paplūdimys ištrintas",
+    });
   } catch (error) {
-    res.status(400).json({ message: "Nepavyko ištrinti paplūdimio" });
+    if (error.name === "CastError") {
+      return res.status(400).json({
+        message: "Neteisingas paplūdimio ID",
+      });
+    }
+
+    console.error("Paplūdimio trynimo klaida:", error);
+
+    res.status(500).json({
+      message: "Įvyko serverio klaida trinant paplūdimį",
+    });
   }
 });
 
 app.get("/api/stebejimai", async (req, res) => {
   try {
-    const stebejimai = await Stebejimas.find();
+    const stebejimai = await Stebejimas.find().populate("papludimys");
 
     res.status(200).json(stebejimai);
   } catch (error) {
-    res.status(500).json({ message: "Nepavyko gauti stebėjimų" });
+    console.error("Stebėjimų gavimo klaida:", error);
+
+    res.status(500).json({
+      message: "Nepavyko gauti stebėjimų.",
+    });
   }
 });
 
@@ -97,8 +146,16 @@ app.post("/api/stebejimai", async (req, res) => {
       });
     }
 
-    res.status(400).json({
-      message: "Nepavyko sukurti stebėjimo. Patikrink įvestus duomenis.",
+    if (error.name === "CastError") {
+      return res.status(400).json({
+        message: "Neteisingi stebėjimo duomenys.",
+      });
+    }
+
+    console.error("Stebėjimo kūrimo klaida:", error);
+
+    res.status(500).json({
+      message: "Įvyko serverio klaida kuriant stebėjimą.",
     });
   }
 });
@@ -117,7 +174,25 @@ app.put("/api/stebejimai/:id", async (req, res) => {
 
     res.status(200).json(atnaujintasStebejimas);
   } catch (error) {
-    res.status(400).json({ message: "Nepavyko atnaujinti stebėjimo" });
+    if (error.name === "ValidationError" || error.name === "CastError") {
+      const klaidos =
+        error.name === "ValidationError"
+          ? Object.values(error.errors).map((laukas) => laukas.message)
+          : [];
+
+      return res.status(400).json({
+        message:
+          klaidos.length > 0
+            ? klaidos.join(". ")
+            : "Neteisingi stebėjimo duomenys arba ID",
+      });
+    }
+
+    console.error("Stebėjimo atnaujinimo klaida:", error);
+
+    res.status(500).json({
+      message: "Įvyko serverio klaida atnaujinant stebėjimą",
+    });
   }
 });
 
@@ -128,12 +203,26 @@ app.delete("/api/stebejimai/:id", async (req, res) => {
     );
 
     if (!istrintasStebejimas) {
-      return res.status(404).json({ message: "Stebėjimas nerastas" });
+      return res.status(404).json({
+        message: "Stebėjimas nerastas",
+      });
     }
 
-    res.status(200).json({ message: "Stebėjimas ištrintas" });
+    res.status(200).json({
+      message: "Stebėjimas ištrintas",
+    });
   } catch (error) {
-    res.status(400).json({ message: "Nepavyko ištrinti stebėjimo" });
+    if (error.name === "CastError") {
+      return res.status(400).json({
+        message: "Neteisingas stebėjimo ID",
+      });
+    }
+
+    console.error("Stebėjimo trynimo klaida:", error);
+
+    res.status(500).json({
+      message: "Įvyko serverio klaida trinant stebėjimą",
+    });
   }
 });
 

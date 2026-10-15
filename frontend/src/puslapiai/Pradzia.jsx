@@ -43,15 +43,19 @@ function Pradzia() {
         },
       );
 
+      const duomenys = await atsakymas.json();
+
       if (!atsakymas.ok) {
-        throw new Error("Nepavyko ištrinti paplūdimio.");
+        alert(duomenys.message || "Nepavyko ištrinti paplūdimio.");
+        return;
       }
 
       setPapludimiai((dabartiniai) =>
         dabartiniai.filter((papludimys) => papludimys._id !== id),
       );
     } catch (error) {
-      setKlaida(error.message);
+      alert("Nepavyko susisiekti su serveriu.");
+      console.error("Paplūdimio trynimo klaida:", error);
     }
   }
 
