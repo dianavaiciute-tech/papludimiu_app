@@ -10,10 +10,14 @@ const stebejimasSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
+
   vandensTemperatura: {
     type: Number,
-    required: true,
+    required: [true, "Būtina įvesti vandens temperatūrą"],
+    min: [0, "Temperatūra negali būti mažesnė nei 0 °C"],
+    max: [45, "Temperatūra negali būti didesnė nei 45 °C"],
   },
+
   vandensKokybe: {
     type: String,
     required: true,

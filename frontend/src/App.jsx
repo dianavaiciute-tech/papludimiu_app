@@ -1,43 +1,43 @@
-import { useEffect, useState } from "react";
+import { BrowserRouter, Link, Routes, Route } from "react-router-dom";
+import Pradzia from "./puslapiai/Pradzia";
+import Stebejimai from "./puslapiai/Stebejimai";
+import NaujasStebejimas from "./puslapiai/NaujasStebejimas";
+import RedaguotiStebejima from "./puslapiai/RedaguotiStebejima";
+import NaujasPapludimys from "./puslapiai/NaujasPapludimys";
+import RedaguotiPapludimys from "./puslapiai/RedaguotiPapludimys";
 
 function App() {
-  const [papludimiai, setPapludimiai] = useState([]);
-  const [klaida, setKlaida] = useState("");
-
-  useEffect(() => {
-    fetch("http://localhost:5000/api/papludimiai")
-      .then((atsakymas) => {
-        if (!atsakymas.ok) {
-          throw new Error("Nepavyko gauti paplūdimių");
-        }
-
-        return atsakymas.json();
-      })
-      .then((duomenys) => {
-        setPapludimiai(duomenys);
-      })
-      .catch(() => {
-        setKlaida("Nepavyko įkelti paplūdimių.");
-      });
-  }, []);
-
   return (
-    <div>
-      <h1>Paplūdimių vandens stebėjimas</h1>
+    <BrowserRouter>
+      <div>
+        <h1>Paplūdimių vandens stebėjimas</h1>
 
-      <h2>Paplūdimiai</h2>
+        <nav>
+          <Link to="/">Pradžia</Link>
+          {" | "}
+          <Link to="/stebejimai">Vandens stebėjimai</Link>
+          {" | "}
+          <Link to="/stebejimai/naujas">Naujas stebėjimas</Link>
+          {" | "}
+          <Link to="/papludimiai/naujas">Pridėti paplūdimį</Link>
+        </nav>
 
-      {klaida && <p>{klaida}</p>}
-
-      {papludimiai.length === 0 && !klaida && <p>Paplūdimių kol kas nėra.</p>}
-
-      {papludimiai.map((papludimys) => (
-        <div key={papludimys._id}>
-          <h3>{papludimys.pavadinimas}</h3>
-          <p>Miestas: {papludimys.miestas}</p>
-        </div>
-      ))}
-    </div>
+        <Routes>
+          <Route path="/" element={<Pradzia />} />
+          <Route path="/stebejimai" element={<Stebejimai />} />
+          <Route path="/stebejimai/naujas" element={<NaujasStebejimas />} />
+          <Route
+            path="/stebejimai/redaguoti/:id"
+            element={<RedaguotiStebejima />}
+          />
+          <Route path="/papludimiai/naujas" element={<NaujasPapludimys />} />
+          <Route
+            path="/papludimiai/redaguoti/:id"
+            element={<RedaguotiPapludimys />}
+          />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 

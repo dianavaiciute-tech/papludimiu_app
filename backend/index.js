@@ -87,7 +87,19 @@ app.post("/api/stebejimai", async (req, res) => {
 
     res.status(201).json(issaugotasStebejimas);
   } catch (error) {
-    res.status(400).json({ message: "Nepavyko sukurti stebėjimo" });
+    if (error.name === "ValidationError") {
+      const klaidos = Object.values(error.errors).map(
+        (laukas) => laukas.message,
+      );
+
+      return res.status(400).json({
+        message: `Klaida: ${klaidos.join(". ")}`,
+      });
+    }
+
+    res.status(400).json({
+      message: "Nepavyko sukurti stebėjimo. Patikrink įvestus duomenis.",
+    });
   }
 });
 
