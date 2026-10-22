@@ -69,6 +69,14 @@ function Stebejimai() {
 
       {stebejimai.map((stebejimas) => (
         <div key={stebejimas._id}>
+          <p>
+            Paplūdimys:{" "}
+            {typeof stebejimas.papludimys === "object" &&
+            stebejimas.papludimys !== null
+              ? `${stebejimas.papludimys.pavadinimas} (${stebejimas.papludimys.miestas})`
+              : "Paplūdimys nerastas"}
+          </p>
+
           <p>Data: {new Date(stebejimas.data).toLocaleString("lt-LT")}</p>
           <p>Vandens temperatūra: {stebejimas.vandensTemperatura} °C</p>
           <p>Vandens kokybė: {stebejimas.vandensKokybe}</p>

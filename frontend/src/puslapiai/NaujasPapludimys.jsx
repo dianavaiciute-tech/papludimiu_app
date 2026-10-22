@@ -14,6 +14,36 @@ function NaujasPapludimys() {
     e.preventDefault();
     setZinute("");
 
+    if (
+      !pavadinimas.trim() ||
+      !miestas.trim() ||
+      platuma === "" ||
+      ilguma === ""
+    ) {
+      setZinute("Užpildykite visus privalomus laukus.");
+      return;
+    }
+
+    if (
+      !Number.isFinite(Number(platuma)) ||
+      Number(platuma) < -90 ||
+      Number(platuma) > 90
+    ) {
+      setZinute("Platuma turi būti skaičius nuo -90 iki 90.");
+      return;
+    }
+
+    if (
+      !Number.isFinite(Number(ilguma)) ||
+      Number(ilguma) < -180 ||
+      Number(ilguma) > 180
+    ) {
+      setZinute("Ilguma turi būti skaičius nuo -180 iki 180.");
+      return;
+    }
+
+    setZinute("");
+
     try {
       const atsakymas = await fetch("http://localhost:5000/api/papludimiai", {
         method: "POST",

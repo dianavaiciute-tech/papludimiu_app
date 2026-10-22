@@ -63,6 +63,20 @@ function RedaguotiStebejima() {
     setKlaida("");
     setZinute("");
 
+    if (!papludimys || !data || temperatura === "") {
+      setKlaida("Užpildykite visus privalomus laukus.");
+      return;
+    }
+
+    if (
+      !Number.isFinite(Number(temperatura)) ||
+      Number(temperatura) < -5 ||
+      Number(temperatura) > 45
+    ) {
+      setKlaida("Temperatūra turi būti nuo -5 iki 45 °C.");
+      return;
+    }
+
     try {
       const atsakymas = await fetch(
         `http://localhost:5000/api/stebejimai/${id}`,

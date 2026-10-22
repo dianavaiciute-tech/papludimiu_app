@@ -1,184 +1,352 @@
-.counter {
-  font-size: 16px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  color: var(--accent);
-  background: var(--accent-bg);
-  border: 2px solid transparent;
-  transition: border-color 0.3s;
-  margin-bottom: 24px;
+/* Bendras puslapio stilius */
+* {
+  box-sizing: border-box;
+}
 
-  &:hover {
-    border-color: var(--accent-border);
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f3f7fa;
+  color: #203047;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Pagrindinis turinio plotas */
+main,
+.pagrindinis-turinys {
+  width: min(1100px, 92%);
+  margin: 32px auto;
+}
+
+/* Antraštės */
+h1,
+h2,
+h3 {
+  color: #123451;
+}
+
+/* Formų laukai */
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 11px 12px;
+  margin-top: 6px;
+  border: 1px solid #cbd7e2;
+  border-radius: 8px;
+  background-color: white;
+  font: inherit;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid #48b8b0;
+  border-color: #48b8b0;
+}
+
+/* Mygtukai */
+button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #087f8c;
+  color: white;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #066873;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Kortelės */
+.kortele {
+  padding: 20px;
+  margin-bottom: 16px;
+  border: 1px solid #e0e8ef;
+  border-radius: 14px;
+  background-color: white;
+  box-shadow: 0 3px 12px rgba(18, 52, 81, 0.06);
+}
+
+/* Mažesni ekranai */
+@media (max-width: 600px) {
+  main,
+  .pagrindinis-turinys {
+    width: 94%;
+    margin: 20px auto;
   }
-  &:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
+
+  .kortele {
+    padding: 15px;
   }
 }
 
-.hero {
-  position: relative;
+/* Viršutinė navigacija */
+.virsus {
+  background: #123451;
+  color: white;
+  box-shadow: 0 4px 18px rgba(18, 52, 81, 0.14);
+}
 
-  .base,
-  .framework,
-  .vite {
-    inset-inline: 0;
-    margin: 0 auto;
+.virsaus-turinys {
+  width: min(1200px, 94%);
+  min-height: 88px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding: 16px 0;
+}
+
+.prekes-zenklas {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: white;
+}
+
+.logotipo-zenklas {
+  font-size: 32px;
+}
+
+.prekes-zenklas strong,
+.prekes-zenklas small {
+  display: block;
+}
+
+.prekes-zenklas strong {
+  font-size: 19px;
+}
+
+.prekes-zenklas small {
+  margin-top: 4px;
+  color: #b9d9e8;
+  font-size: 12px;
+}
+
+.navigacija {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.navigacija a {
+  color: #edf7fb;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+}
+
+.navigacija a:hover {
+  background-color: #254d69;
+}
+
+.navigacija .navigacijos-mygtukas {
+  background-color: #20a9a0;
+  color: white;
+  font-weight: 600;
+}
+
+.navigacija .navigacijos-mygtukas:hover {
+  background-color: #17877f;
+}
+
+.puslapio-turinys {
+  width: min(1200px, 94%);
+  margin: 32px auto;
+}
+
+@media (max-width: 700px) {
+  .virsaus-turinys {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
   }
 
-  .base {
-    width: 170px;
-    position: relative;
-    z-index: 0;
+  .navigacija {
+    width: 100%;
+    gap: 6px;
   }
 
-  .framework,
-  .vite {
-    position: absolute;
+  .navigacija a {
+    padding: 9px 10px;
   }
 
-  .framework {
-    z-index: 1;
-    top: 34px;
-    height: 28px;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
-      scale(1.4);
-  }
-
-  .vite {
-    z-index: 0;
-    top: 107px;
-    height: 26px;
-    width: auto;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
-      scale(0.8);
+  .puslapio-turinys {
+    margin-top: 22px;
   }
 }
 
-#center {
+/* Pradinis puslapis */
+.pradzios-puslapis {
   display: flex;
   flex-direction: column;
-  gap: 25px;
-  place-content: center;
+  gap: 22px;
+}
+
+.puslapio-antraste {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.virsrasa-zyma {
+  color: #087f8c;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.puslapio-antraste h1 {
+  margin: 8px 0;
+  font-size: clamp(26px, 4vw, 36px);
+}
+
+.antrastes-aprasymas {
+  margin-top: 8px;
+  color: #637589;
+  line-height: 1.6;
+}
+
+.papludimiu-skaicius {
+  color: #536779;
+  font-size: 14px;
+}
+
+.papludimiu-skaicius strong {
+  color: #123451;
+}
+
+.papludimiu-sarasas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: 18px;
+}
+
+.papludimio-kortele {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 22px;
+  background: white;
+  border: 1px solid #e0e8ef;
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(18, 52, 81, 0.05);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.papludimio-kortele:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 22px rgba(18, 52, 81, 0.1);
+}
+
+.korteles-zenklas {
+  display: grid;
   place-items: center;
-  flex-grow: 1;
-
-  @media (max-width: 1024px) {
-    padding: 32px 20px 24px;
-    gap: 18px;
-  }
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: #e1f4f3;
+  font-size: 24px;
 }
 
-#next-steps {
+.papludimio-informacija h3 {
+  margin: 0 0 8px;
+  font-size: 20px;
+}
+
+.papludimio-miestas {
+  margin: 0 0 16px;
+  color: #536779;
+}
+
+.koordinates {
   display: flex;
-  border-top: 1px solid var(--border);
-  text-align: left;
-
-  & > div {
-    flex: 1 1 0;
-    padding: 32px;
-    @media (max-width: 1024px) {
-      padding: 24px 20px;
-    }
-  }
-
-  .icon {
-    margin-bottom: 16px;
-    width: 22px;
-    height: 22px;
-  }
-
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    text-align: center;
-  }
-}
-
-#docs {
-  border-right: 1px solid var(--border);
-
-  @media (max-width: 1024px) {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
-}
-
-#next-steps ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
+  flex-wrap: wrap;
   gap: 8px;
-  margin: 32px 0 0;
-
-  .logo {
-    height: 18px;
-  }
-
-  a {
-    color: var(--text-h);
-    font-size: 16px;
-    border-radius: 6px;
-    background: var(--social-bg);
-    display: flex;
-    padding: 6px 12px;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    transition: box-shadow 0.3s;
-
-    &:hover {
-      box-shadow: var(--shadow);
-    }
-    .button-icon {
-      height: 18px;
-      width: 18px;
-    }
-  }
-
-  @media (max-width: 1024px) {
-    margin-top: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-
-    li {
-      flex: 1 1 calc(50% - 8px);
-    }
-
-    a {
-      width: 100%;
-      justify-content: center;
-      box-sizing: border-box;
-    }
-  }
 }
 
-#spacer {
-  height: 88px;
-  border-top: 1px solid var(--border);
-  @media (max-width: 1024px) {
-    height: 48px;
-  }
+.koordinates span {
+  padding: 7px 9px;
+  border-radius: 7px;
+  background: #f1f6f9;
+  color: #536779;
+  font-size: 12px;
 }
 
-.ticks {
-  position: relative;
+.papludimio-veiksmai {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 4px;
+}
+
+.redagavimo-mygtukas {
+  background: #087f8c;
+}
+
+.trynimo-mygtukas {
+  background: #fff0f0;
+  color: #a52b35;
+}
+
+.trynimo-mygtukas:hover {
+  background: #ffdddd;
+}
+
+.tuscias-pranesimas {
+  padding: 30px;
+  border: 1px dashed #b9cbd8;
+  border-radius: 14px;
+  background: white;
+  text-align: center;
+}
+
+.tuscias-pranesimas p {
+  color: #637589;
+}
+
+/* Paplūdimių žemėlapis */
+.zemelapio-apvalkalas {
+  overflow: hidden;
+  border: 1px solid #dce6ed;
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(18, 52, 81, 0.08);
+}
+
+.papludimiu-zemelapis {
   width: 100%;
+  height: 420px;
+}
 
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: -4.5px;
-    border: 5px solid transparent;
-  }
+.zemelapio-sekcija h2 {
+  margin-bottom: 8px;
+}
 
-  &::before {
-    left: 0;
-    border-left-color: var(--border);
-  }
-  &::after {
-    right: 0;
-    border-right-color: var(--border);
-  }
+.zemelapio-sekcija > p {
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: #637589;
+  line-height: 1.5;
 }

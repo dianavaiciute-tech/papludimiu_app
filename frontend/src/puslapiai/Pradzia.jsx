@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import PapludimiuZemelapis from "../PapludimiuZemelapis";
 
 function Pradzia() {
   const [papludimiai, setPapludimiai] = useState([]);
@@ -68,34 +69,75 @@ function Pradzia() {
   }
 
   return (
-    <div>
-      <h2>Lietuvos pajūrio paplūdimiai</h2>
+    <div className="pradzios-puslapis">
+      <div className="puslapio-antraste">
+        <div>
+          <p className="virsrasa-zyma">LIETUVOS BALTIJOS PAKRANTĖ</p>
+          <h1>Lietuvos pajūrio paplūdimiai</h1>
+          <p className="antrastes-aprasymas">
+            Peržiūrėk paplūdimius ir tvarkyk informaciją apie pakrantę.
+          </p>
+        </div>
+
+        <button onClick={() => navigate("/papludimiai/naujas")}>
+          + Pridėti paplūdimį
+        </button>
+      </div>
+
+      <div className="papludimiu-skaicius">
+        Iš viso paplūdimių: <strong>{papludimiai.length}</strong>
+      </div>
+
+      <section className="zemelapio-sekcija">
+        <h2>Paplūdimiai žemėlapyje</h2>
+        <p>Pasirink žymeklį ir peržiūrėk paplūdimio informaciją.</p>
+
+        <PapludimiuZemelapis papludimiai={papludimiai} />
+      </section>
 
       {papludimiai.length === 0 ? (
-        <p>Paplūdimių kol kas nėra.</p>
+        <div className="tuscias-pranesimas">
+          <h3>Kol kas nėra paplūdimių</h3>
+          <p>Pridėk pirmąjį paplūdimį, kad galėtum pradėti.</p>
+        </div>
       ) : (
-        <ul>
+        <div className="papludimiu-sarasas">
           {papludimiai.map((papludimys) => (
-            <li key={papludimys._id}>
-              <strong>{papludimys.pavadinimas}</strong>
-              {" — "}
-              {papludimys.miestas}
-              <br />
-              Platuma: {papludimys.platuma}, ilguma: {papludimys.ilguma}
-              <br />
-              <button
-                onClick={() =>
-                  navigate(`/papludimiai/redaguoti/${papludimys._id}`)
-                }
-              >
-                Redaguoti
-              </button>
-              <button onClick={() => istrintiPapludimi(papludimys._id)}>
-                Ištrinti
-              </button>
-            </li>
+            <article className="papludimio-kortele" key={papludimys._id}>
+              <div className="korteles-zenklas">🌊</div>
+
+              <div className="papludimio-informacija">
+                <h3>{papludimys.pavadinimas}</h3>
+                <p className="papludimio-miestas">
+                  <span>📍</span> {papludimys.miestas}
+                </p>
+
+                <div className="koordinates">
+                  <span>Platuma: {papludimys.platuma}</span>
+                  <span>Ilguma: {papludimys.ilguma}</span>
+                </div>
+              </div>
+
+              <div className="papludimio-veiksmai">
+                <button
+                  className="redagavimo-mygtukas"
+                  onClick={() =>
+                    navigate(`/papludimiai/redaguoti/${papludimys._id}`)
+                  }
+                >
+                  Redaguoti
+                </button>
+
+                <button
+                  className="trynimo-mygtukas"
+                  onClick={() => istrintiPapludimi(papludimys._id)}
+                >
+                  Ištrinti
+                </button>
+              </div>
+            </article>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );

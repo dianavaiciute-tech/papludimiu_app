@@ -1,3 +1,4 @@
+import "./App.css";
 import { BrowserRouter, Link, Routes, Route } from "react-router-dom";
 import Pradzia from "./puslapiai/Pradzia";
 import Stebejimai from "./puslapiai/Stebejimai";
@@ -9,19 +10,28 @@ import RedaguotiPapludimys from "./puslapiai/RedaguotiPapludimys";
 function App() {
   return (
     <BrowserRouter>
-      <div>
-        <h1>Paplūdimių vandens stebėjimas</h1>
+      <header className="virsus">
+        <div className="virsaus-turinys">
+          <Link to="/" className="prekes-zenklas">
+            <span className="logotipo-zenklas">🌊</span>
+            <span>
+              <strong>Baltijos stebėsena</strong>
+              <small>Paplūdimių vandens kokybė</small>
+            </span>
+          </Link>
 
-        <nav>
-          <Link to="/">Pradžia</Link>
-          {" | "}
-          <Link to="/stebejimai">Vandens stebėjimai</Link>
-          {" | "}
-          <Link to="/stebejimai/naujas">Naujas stebėjimas</Link>
-          {" | "}
-          <Link to="/papludimiai/naujas">Pridėti paplūdimį</Link>
-        </nav>
+          <nav className="navigacija">
+            <Link to="/">Pradžia</Link>
+            <Link to="/stebejimai">Stebėjimai</Link>
+            <Link to="/stebejimai/naujas" className="navigacijos-mygtukas">
+              + Naujas stebėjimas
+            </Link>
+            <Link to="/papludimiai/naujas">+ Paplūdimys</Link>
+          </nav>
+        </div>
+      </header>
 
+      <main className="puslapio-turinys">
         <Routes>
           <Route path="/" element={<Pradzia />} />
           <Route path="/stebejimai" element={<Stebejimai />} />
@@ -36,7 +46,7 @@ function App() {
             element={<RedaguotiPapludimys />}
           />
         </Routes>
-      </div>
+      </main>
     </BrowserRouter>
   );
 }
