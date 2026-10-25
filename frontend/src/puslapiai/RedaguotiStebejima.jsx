@@ -50,7 +50,7 @@ function RedaguotiStebejima() {
         setKokybe(rastasStebejimas.vandensKokybe);
         setBangavimas(rastasStebejimas.bangavimas);
         setPastabos(rastasStebejimas.pastabos || "");
-      } catch (error) {
+      } catch {
         setKlaida("Nepavyko įkelti stebėjimo duomenų.");
       }
     }

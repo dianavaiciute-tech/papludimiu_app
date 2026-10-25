@@ -1,7 +1,11 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
-function PapludimiuZemelapis({ papludimiai }) {
+function PapludimiuZemelapis({
+  papludimiai,
+  setPasirinktasPapludimys,
+  setRodytiGrafika,
+}) {
   return (
     <div className="zemelapio-apvalkalas">
       <MapContainer
@@ -19,11 +23,31 @@ function PapludimiuZemelapis({ papludimiai }) {
           <Marker
             key={papludimys._id}
             position={[Number(papludimys.platuma), Number(papludimys.ilguma)]}
+            eventHandlers={{
+              click: () => setPasirinktasPapludimys(papludimys),
+            }}
           >
             <Popup>
               <strong>{papludimys.pavadinimas}</strong>
               <br />
               {papludimys.miestas}
+              <br />
+
+              <a
+                href="#temperaturos-grafikas"
+                onClick={(event) => {
+                  event.preventDefault();
+                  setPasirinktasPapludimys(papludimys);
+                  setRodytiGrafika(true);
+                }}
+                style={{
+                  color: "#168aad",
+                  textDecoration: "underline",
+                  cursor: "pointer",
+                }}
+              >
+                Rodyti grafiką
+              </a>
             </Popup>
           </Marker>
         ))}

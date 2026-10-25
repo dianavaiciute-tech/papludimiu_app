@@ -1,9 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import PapludimiuZemelapis from "../PapludimiuZemelapis";
+import {
+  ResponsiveContainer,
+  ScatterChart,
+  Scatter,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+} from "recharts";
 
 function Pradzia() {
   const [papludimiai, setPapludimiai] = useState([]);
+  const [stebejimai, setStebejimai] = useState([]);
+  const [pasirinktasPapludimys, setPasirinktasPapludimys] = useState(null);
+  const grafikoRef = useRef(null);
+  const [rodytiGrafika, setRodytiGrafika] = useState(false);
   const [kraunama, setKraunama] = useState(true);
   const [klaida, setKlaida] = useState("");
   const navigate = useNavigate();
@@ -26,6 +39,47 @@ function Pradzia() {
         setKraunama(false);
       });
   }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/stebejimai")
+      .then((atsakymas) => {
+        if (!atsakymas.ok) {
+          throw new Error("Nepavyko gauti vandens stebėjimų.");
+        }
+
+        return atsakymas.json();
+      })
+      .then((duomenys) => {
+        setStebejimai(duomenys);
+      })
+      .catch((error) => {
+        console.error("Stebėjimų užkrovimo klaida:", error);
+      });
+  }, []);
+
+  const grafikoDuomenys = stebejimai
+    .filter((stebejimas) => {
+      return (
+        pasirinktasPapludimys &&
+        stebejimas.papludimys?._id === pasirinktasPapludimys._id
+      );
+    })
+    .sort((a, b) => new Date(a.data) - new Date(b.data))
+    .map((stebejimas) => ({
+      data: new Date(stebejimas.data).toLocaleDateString("lt-LT"),
+      temperatura: Number(stebejimas.vandensTemperatura),
+    }));
+
+  useEffect(() => {
+    if (rodytiGrafika && pasirinktasPapludimys && grafikoRef.current) {
+      grafikoRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+
+      setRodytiGrafika(false);
+    }
+  }, [rodytiGrafika, pasirinktasPapludimys]);
 
   async function istrintiPapludimi(id) {
     const patvirtinta = window.confirm(
@@ -92,8 +146,67 @@ function Pradzia() {
         <h2>Paplūdimiai žemėlapyje</h2>
         <p>Pasirink žymeklį ir peržiūrėk paplūdimio informaciją.</p>
 
-        <PapludimiuZemelapis papludimiai={papludimiai} />
+        <PapludimiuZemelapis
+          papludimiai={papludimiai}
+          pasirinktasPapludimys={pasirinktasPapludimys}
+          setPasirinktasPapludimys={setPasirinktasPapludimys}
+          setRodytiGrafika={setRodytiGrafika}
+        />
       </section>
+
+      {pasirinktasPapludimys && (
+        <section
+          id="temperaturos-grafikas"
+          ref={grafikoRef}
+          className="temperaturos-grafiko-sekcija"
+        >
+          <button type="button" onClick={() => setPasirinktasPapludimys(null)}>
+            Uždaryti grafiką
+          </button>
+          <h2>Vandens temperatūros istorija</h2>
+          <p>
+            {pasirinktasPapludimys.pavadinimas} —{" "}
+            {pasirinktasPapludimys.miestas}
+          </p>
+
+          {grafikoDuomenys.length === 0 ? (
+            <p>Šiam paplūdimiui vandens temperatūros stebėjimų dar nėra.</p>
+          ) : (
+            <div style={{ width: "100%", height: 320 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <ScatterChart
+                  margin={{ top: 15, right: 20, bottom: 20, left: 10 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis
+                    type="category"
+                    dataKey="data"
+                    name="Data"
+                    tick={{ fontSize: 12 }}
+                    angle={-25}
+                    textAnchor="end"
+                    height={55}
+                  />
+                  <YAxis
+                    type="number"
+                    dataKey="temperatura"
+                    name="Temperatūra"
+                    unit=" °C"
+                    domain={["auto", "auto"]}
+                  />
+                  <Tooltip cursor={{ strokeDasharray: "3 3" }} />
+                  <Scatter
+                    name="Vandens temperatūra"
+                    data={grafikoDuomenys}
+                    fill="#168aad"
+                    shape="circle"
+                  />
+                </ScatterChart>
+              </ResponsiveContainer>
+            </div>
+          )}
+        </section>
+      )}
 
       {papludimiai.length === 0 ? (
         <div className="tuscias-pranesimas">
