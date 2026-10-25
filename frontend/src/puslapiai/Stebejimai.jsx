@@ -16,13 +16,17 @@ function Stebejimai() {
       const duomenys = await atsakymas.json();
       setStebejimai(duomenys);
       setKlaida("");
-    } catch (error) {
+    } catch {
       setKlaida("Nepavyko įkelti vandens stebėjimų.");
     }
   }
 
   useEffect(() => {
-    gautiStebejimus();
+    async function uzkrautiDuomenis() {
+      await gautiStebejimus();
+    }
+
+    uzkrautiDuomenis();
   }, []);
 
   async function istrintiStebejima(id) {
@@ -59,46 +63,94 @@ function Stebejimai() {
   }
 
   return (
-    <div>
-      <h2>Vandens stebėjimai</h2>
-
-      {klaida && <p>{klaida}</p>}
-      {zinute && <p>{zinute}</p>}
-
-      {!klaida && stebejimai.length === 0 && <p>Stebėjimų kol kas nėra.</p>}
-
-      {stebejimai.map((stebejimas) => (
-        <div key={stebejimas._id}>
-          <p>
-            Paplūdimys:{" "}
-            {typeof stebejimas.papludimys === "object" &&
-            stebejimas.papludimys !== null
-              ? `${stebejimas.papludimys.pavadinimas} (${stebejimas.papludimys.miestas})`
-              : "Paplūdimys nerastas"}
-          </p>
-
-          <p>Data: {new Date(stebejimas.data).toLocaleString("lt-LT")}</p>
-          <p>Vandens temperatūra: {stebejimas.vandensTemperatura} °C</p>
-          <p>Vandens kokybė: {stebejimas.vandensKokybe}</p>
-          <p>Bangavimas: {stebejimas.bangavimas}</p>
-
-          {stebejimas.pastabos && <p>Pastabos: {stebejimas.pastabos}</p>}
-
-          <button
-            onClick={() =>
-              (window.location.href = `/stebejimai/redaguoti/${stebejimas._id}`)
-            }
-          >
-            Redaguoti
-          </button>
-
-          <button onClick={() => istrintiStebejima(stebejimas._id)}>
-            Ištrinti
-          </button>
-
-          <hr />
+    <div className="stebejimu-puslapis">
+      <div className="stebejimu-antraste">
+        <div>
+          <h1>Vandens stebėjimai</h1>
+          <p>Peržiūrėk Lietuvos pajūrio vandens būklės duomenis.</p>
         </div>
-      ))}
+
+        <button onClick={() => (window.location.href = "/stebejimai/naujas")}>
+          + Naujas stebėjimas
+        </button>
+      </div>
+
+      {klaida && <p className="klaidos-pranesimas">{klaida}</p>}
+      {zinute && <p className="sekmes-pranesimas">{zinute}</p>}
+
+      {!klaida && stebejimai.length === 0 && (
+        <div className="tuscias-pranesimas">
+          <h3>Stebėjimų kol kas nėra</h3>
+          <p>Pridėk naują stebėjimą, kad čia matytum vandens duomenis.</p>
+        </div>
+      )}
+
+      <div className="stebejimu-sarasas">
+        {stebejimai.map((stebejimas) => (
+          <article className="stebejimo-kortele" key={stebejimas._id}>
+            <div className="stebejimo-korteles-virsus">
+              <h3>
+                {typeof stebejimas.papludimys === "object" &&
+                stebejimas.papludimys !== null
+                  ? stebejimas.papludimys.pavadinimas
+                  : "Paplūdimys nerastas"}
+              </h3>
+
+              <p className="stebejimo-vieta">
+                {typeof stebejimas.papludimys === "object" &&
+                stebejimas.papludimys !== null
+                  ? stebejimas.papludimys.miestas
+                  : ""}
+              </p>
+
+              <span className="stebejimo-data">
+                {new Date(stebejimas.data).toLocaleString("lt-LT")}
+              </span>
+            </div>
+
+            <div className="stebejimo-duomenys">
+              <div className="stebejimo-duomuo">
+                <span>Vandens temperatūra</span>
+                <strong>{stebejimas.vandensTemperatura} °C</strong>
+              </div>
+
+              <div className="stebejimo-duomuo">
+                <span>Vandens kokybė</span>
+                <strong>{stebejimas.vandensKokybe}</strong>
+              </div>
+
+              <div className="stebejimo-duomuo">
+                <span>Bangavimas</span>
+                <strong>{stebejimas.bangavimas}</strong>
+              </div>
+            </div>
+
+            {stebejimas.pastabos && (
+              <p className="stebejimo-pastabos">
+                <strong>Pastabos:</strong> {stebejimas.pastabos}
+              </p>
+            )}
+
+            <div className="stebejimo-veiksmai">
+              <button
+                className="redagavimo-mygtukas"
+                onClick={() =>
+                  (window.location.href = `/stebejimai/redaguoti/${stebejimas._id}`)
+                }
+              >
+                Redaguoti
+              </button>
+
+              <button
+                className="trynimo-mygtukas"
+                onClick={() => istrintiStebejima(stebejimas._id)}
+              >
+                Ištrinti
+              </button>
+            </div>
+          </article>
+        ))}
+      </div>
     </div>
   );
 }
