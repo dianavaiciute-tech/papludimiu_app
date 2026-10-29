@@ -162,7 +162,7 @@ button:disabled {
   padding: 16px 0;
 }
 
-.prekes-zenklas {
+.papludimio-zenklas {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -170,19 +170,22 @@ button:disabled {
 }
 
 .logotipo-zenklas {
-  font-size: 32px;
-}
-
-.prekes-zenklas strong,
-.prekes-zenklas small {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
   display: block;
 }
 
-.prekes-zenklas strong {
+.papludimio-zenklas strong,
+.papludimio-zenklas small {
+  display: block;
+}
+
+.papludimio-zenklas strong {
   font-size: 19px;
 }
 
-.prekes-zenklas small {
+.papludimio-zenklas small {
   margin-top: 4px;
   color: #b9d9e8;
   font-size: 12px;
@@ -258,7 +261,7 @@ button:disabled {
   flex-wrap: wrap;
 }
 
-.virsrasa-zyma {
+.virs-zyma {
   color: #087f8c;
   font-size: 12px;
   font-weight: 700;
@@ -320,6 +323,26 @@ button:disabled {
   font-size: 24px;
 }
 
+.korteles-zenklas img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.miesto-zenklas {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 4px;
+}
+
+.miesto-zenklas img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  display: block;
+}
+
 .papludimio-informacija h3 {
   margin: 0 0 8px;
   font-size: 20px;
@@ -378,7 +401,7 @@ button:disabled {
 }
 
 /* Paplūdimių žemėlapis */
-.zemelapio-apvalkalas {
+.zemelapio-pagrindas {
   overflow: hidden;
   border: 1px solid #dce6ed;
   border-radius: 16px;

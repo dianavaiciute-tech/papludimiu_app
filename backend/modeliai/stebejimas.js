@@ -26,7 +26,7 @@ const stebejimasSchema = new mongoose.Schema({
   bangavimas: {
     type: String,
     required: true,
-    enum: ["Zalia", "Geltona", "Raudona"],
+    enum: ["Žalia", "Geltona", "Raudona"],
   },
   pastabos: {
     type: String,

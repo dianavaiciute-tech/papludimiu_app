@@ -7,7 +7,7 @@ function PapludimiuZemelapis({
   setRodytiGrafika,
 }) {
   return (
-    <div className="zemelapio-apvalkalas">
+    <div className="zemelapio-pagrindas">
       <MapContainer
         center={[55.5, 21.2]}
         zoom={8}

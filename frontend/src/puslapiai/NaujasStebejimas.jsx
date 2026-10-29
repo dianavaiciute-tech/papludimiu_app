@@ -6,7 +6,7 @@ function NaujasStebejimas() {
   const [data, setData] = useState("");
   const [temperatura, setTemperatura] = useState("");
   const [kokybe, setKokybe] = useState("Gera");
-  const [bangavimas, setBangavimas] = useState("Zalia");
+  const [bangavimas, setBangavimas] = useState("Žalia");
   const [pastabos, setPastabos] = useState("");
   const [zinute, setZinute] = useState("");
 
@@ -48,7 +48,7 @@ function NaujasStebejimas() {
       return;
     }
 
-    if (!["Zalia", "Geltona", "Raudona"].includes(bangavimas)) {
+    if (!["Žalia", "Geltona", "Raudona"].includes(bangavimas)) {
       setZinute("Pasirinkite tinkamą bangavimo būseną.");
       return;
     }
@@ -79,7 +79,7 @@ function NaujasStebejimas() {
       setData("");
       setTemperatura("");
       setKokybe("Gera");
-      setBangavimas("Zalia");
+      setBangavimas("Žalia");
       setPastabos("");
     } catch (error) {
       setZinute(error.message || "Įvyko klaida.");
@@ -160,7 +160,7 @@ function NaujasStebejimas() {
             value={bangavimas}
             onChange={(event) => setBangavimas(event.target.value)}
           >
-            <option value="Zalia">Žalia – saugu maudytis</option>
+            <option value="Žalia">Žalia – saugu maudytis</option>
             <option value="Geltona">Geltona – atsargiai</option>
             <option value="Raudona">Raudona – maudytis draudžiama</option>
           </select>

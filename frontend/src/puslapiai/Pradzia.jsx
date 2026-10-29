@@ -10,6 +10,8 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
+import beachIcon from "../assets/beach_icon_new.png";
+import mapMarker from "../assets/map_marker_new.png";
 
 function Pradzia() {
   const [papludimiai, setPapludimiai] = useState([]);
@@ -126,10 +128,10 @@ function Pradzia() {
     <div className="pradzios-puslapis">
       <div className="puslapio-antraste">
         <div>
-          <p className="virsrasa-zyma">LIETUVOS BALTIJOS PAKRANTĖ</p>
-          <h1>Lietuvos pajūrio paplūdimiai</h1>
+          {/* <p className="virs-zyma">LIETUVOS BALTIJOS PAKRANTĖ</p> */}
+          <h1>Lietuvos paplūdimiai</h1>
           <p className="antrastes-aprasymas">
-            Peržiūrėk paplūdimius ir tvarkyk informaciją apie pakrantę.
+            Pažink Lietuvos paplūdimius ir stebėk vandens būklę.
           </p>
         </div>
 
@@ -144,7 +146,7 @@ function Pradzia() {
 
       <section className="zemelapio-sekcija">
         <h2>Paplūdimiai žemėlapyje</h2>
-        <p>Pasirink žymeklį ir peržiūrėk paplūdimio informaciją.</p>
+        <p>Pasirink žymeklį ir peržiūrėk informaciją apie paplūdimį.</p>
 
         <PapludimiuZemelapis
           papludimiai={papludimiai}
@@ -217,12 +219,17 @@ function Pradzia() {
         <div className="papludimiu-sarasas">
           {papludimiai.map((papludimys) => (
             <article className="papludimio-kortele" key={papludimys._id}>
-              <div className="korteles-zenklas">🌊</div>
+              <div className="korteles-zenklas">
+                <img src={beachIcon} alt="Paplūdimys" />
+              </div>
 
               <div className="papludimio-informacija">
                 <h3>{papludimys.pavadinimas}</h3>
                 <p className="papludimio-miestas">
-                  <span>📍</span> {papludimys.miestas}
+                  <span className="miesto-zenklas">
+                    <img src={mapMarker} alt="" />
+                  </span>
+                  {papludimys.miestas}
                 </p>
 
                 <div className="koordinates">

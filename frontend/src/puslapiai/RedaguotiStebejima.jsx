@@ -10,7 +10,7 @@ function RedaguotiStebejima() {
   const [data, setData] = useState("");
   const [temperatura, setTemperatura] = useState("");
   const [kokybe, setKokybe] = useState("Gera");
-  const [bangavimas, setBangavimas] = useState("Zalia");
+  const [bangavimas, setBangavimas] = useState("Žalia");
   const [pastabos, setPastabos] = useState("");
   const [zinute, setZinute] = useState("");
   const [klaida, setKlaida] = useState("");
@@ -192,7 +192,7 @@ function RedaguotiStebejima() {
             value={bangavimas}
             onChange={(event) => setBangavimas(event.target.value)}
           >
-            <option value="Zalia">Žalia – saugu maudytis</option>
+            <option value="Žalia">Žalia – saugu maudytis</option>
             <option value="Geltona">Geltona – atsargiai</option>
             <option value="Raudona">Raudona – maudytis draudžiama</option>
           </select>

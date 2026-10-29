@@ -6,17 +6,22 @@ import NaujasStebejimas from "./puslapiai/NaujasStebejimas";
 import RedaguotiStebejima from "./puslapiai/RedaguotiStebejima";
 import NaujasPapludimys from "./puslapiai/NaujasPapludimys";
 import RedaguotiPapludimys from "./puslapiai/RedaguotiPapludimys";
+import logo from "./assets/Logo_new.png";
 
 function App() {
   return (
     <BrowserRouter>
       <header className="virsus">
         <div className="virsaus-turinys">
-          <Link to="/" className="prekes-zenklas">
-            <span className="logotipo-zenklas">🌊</span>
+          <Link to="/" className="papludimio-zenklas">
+            <img
+              src={logo}
+              alt="Baltijos stebėsenos logotipas"
+              className="logotipo-zenklas"
+            />
             <span>
-              <strong>Baltijos stebėsena</strong>
-              <small>Paplūdimių vandens kokybė</small>
+              <strong>Lietuvos paplūdimių stebėsena</strong>
+              <small>Maudyklų vandens kokybė</small>
             </span>
           </Link>
 
