@@ -17,7 +17,7 @@ Naudotojas gali:
   - Bangavimas (galbėtojų iškeliamų vėliavų atitikmuo):
     - Žalia - saugu maudytis - vandens paviršius ramus, bangų nėra;
     - Geltona - atsarbiai - vandens paviršius banguoja, bangos iki 30 cm, nėra atgalinių srovių;
-    - Raudona - naudytis draudžiama - vandens paviršius ypač banguoja, bangos daugiau nei 30 cm, susiformavusios bangų gožos zonos, stiprios atgalinės srovės;
+    - Raudona - maudytis draudžiama - vandens paviršius ypač banguoja, bangos daugiau nei 30 cm, susiformavusios bangų gožos zonos, stiprios atgalinės srovės;
 
 ## Pagrindinės funkcijos
 
