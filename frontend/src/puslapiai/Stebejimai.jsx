@@ -151,6 +151,73 @@ function Stebejimai() {
           </article>
         ))}
       </div>
+      <section className="rodikliu-paaiskinimas">
+        <h2>Kaip suprasti vandens rodiklius?</h2>
+        <p>
+          Čia pateikiami trumpi vandens kokybės ir bangavimo kategorijų
+          paaiškinimai.
+        </p>
+
+        <div className="rodikliu-grupe">
+          <h3>Vandens kokybė</h3>
+
+          <div className="rodiklio-eilute">
+            <span className="rodiklio-zyma kokybe-puiki">Puiki</span>
+            <p>
+              Vanduo yra skaidrus, nematyti vandenyje plaukiojančių dalelių,
+              vandens spalva nėra pakitusi.
+            </p>
+          </div>
+
+          <div className="rodiklio-eilute">
+            <span className="rodiklio-zyma kokybe-gera">Gera</span>
+            <p>
+              Vanduo yra drumstesnis, vandenyje esančių dalelių kiekis yra
+              nedidelis, vanduo žalsvos ar rusvos spalvos.
+            </p>
+          </div>
+
+          <div className="rodiklio-eilute">
+            <span className="rodiklio-zyma kokybe-bloga">Bloga</span>
+            <p>
+              Vanduo - neskaidrus, vandenyje esančių didelių kieks yra didelis,
+              paviršiuje matyti plėvelė, vanduo itin žalios ar rusvos spalvos,
+              jaučiamas nemalonus kvapas.
+            </p>
+          </div>
+        </div>
+
+        <div className="rodikliu-grupe">
+          <h3>Bangavimas</h3>
+
+          <div className="rodiklio-eilute">
+            <span className="rodiklio-zyma bangavimas-zalias">Žalia</span>
+            <p>Saugu maudytis - vandens paviršius ramus, bangų nėra.</p>
+          </div>
+
+          <div className="rodiklio-eilute">
+            <span className="rodiklio-zyma bangavimas-geltonas">Geltona</span>
+            <p>
+              Atsarbiai - vandens paviršius banguoja, bangos iki 30 cm, nėra
+              atgalinių srovių.
+            </p>
+          </div>
+
+          <div className="rodiklio-eilute">
+            <span className="rodiklio-zyma bangavimas-raudonas">Raudona</span>
+            <p>
+              Maudytis draudžiama - vandens paviršius ypač banguoja, bangos
+              daugiau nei 30 cm, susiformavusios bangų gožos zonos, stiprios
+              atgalinės srovės.
+            </p>
+          </div>
+        </div>
+
+        <p className="rodikliu-pastaba">
+          Pateikta informacija ir įvertinimas nėra oficialus maudymosi saugumo
+          įvertinimas. Vadovaukis oficialiais perspėjimais.
+        </p>
+      </section>
     </div>
   );
 }
